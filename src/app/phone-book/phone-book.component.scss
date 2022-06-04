@@ -1,0 +1,93 @@
+.wrapper {
+    min-height: 100vh;
+    background-color: #f2f2f2;
+}
+
+.header, .main {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.header {
+    padding: 10px 0;
+
+    &__title {
+        margin-bottom: 30px;
+        color: rgb(213 61 61);
+        font-size: 36px;
+    }
+
+    .form {
+        display: flex;
+        justify-content: space-between;
+
+        &-input {
+            width: 85%;
+            margin-right: 10px;
+            color: #5c5c5c;
+        }
+
+        &-btn {
+            width: 15%;
+            color: #ffffff;
+            background-color: #3bad3b;
+        }
+
+        &-btn:active {
+            border-color: #38c545;
+            box-shadow: 0 0 4px 1px #38c545;
+        }
+    }
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    &-head {
+        &__tr {
+            text-align: left;
+            border-top: solid 1px #e4dfdf;
+            border-bottom: solid 2px #e4dfdf;
+        }
+        
+        &__th {
+            padding: 16px 10px;
+            font-size: 18px;
+        }
+    }
+
+    &-body {
+        tr:hover {
+            background-color: #e4dfdf;
+        }
+
+        td {
+            padding: 10px;
+            border-top: solid 1px #e4dfdf;
+        }
+
+        .edit, .delete {
+            padding: 10px 13px;
+        }
+
+        .edit {
+            background-color: #ffc626;
+        }
+
+        .edit:active {
+            border-color: #ffc626;
+            box-shadow: 0 0 4px 1px #ffc626;
+        }
+
+        .delete {
+            color: #ffffff;
+            background-color: rgb(213 61 61);
+        }
+
+        .delete:active {
+            border-color: rgb(213 61 61);
+            box-shadow: 0 0 4px 1px rgb(213 61 61);
+        }
+    }
+}

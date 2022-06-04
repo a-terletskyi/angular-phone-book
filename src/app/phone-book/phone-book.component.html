@@ -1,0 +1,31 @@
+<div class="wrapper">
+    <header class="header">
+        <h1 class="header__title">My phone book!</h1>
+        <form class="form">
+            <input class="form-input" type="text" name="input" placeholder="search text goes here" #inputAdd [(ngModel)]="inputValue">
+            <button class="form-btn" id="add" (click)="addPhone(inputAdd)">add phone</button>
+        </form>
+    </header>
+    <main class="main">
+        <table class="table">
+            <thead class="table-head">
+                <tr class="table-head__tr">
+                    <th class="table-head__th cursor" (click)="sort()">First name</th>
+                    <th class="table-head__th cursor" (click)="sort()">Last name</th>
+                    <th class="table-head__th cursor" (click)="sort()">Number</th>
+                    <th class="table-head__th">Edit</th>
+                    <th class="table-head__th">Delete</th>
+                </tr>
+            </thead>
+            <tbody class="table-body">
+                <tr *ngFor="let contact of contactsPhone; index as i">
+                    <td>{{ contact.firstName }}</td>
+                    <td>{{ contact.lastName }}</td>
+                    <td>{{ contact.phoneNumber }}</td>
+                    <td><button type="button" class="edit" (click)="editPhone(i)">edit</button></td>
+                    <td><button type="button" class="delete" (click)="deletePhone(i)">delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
