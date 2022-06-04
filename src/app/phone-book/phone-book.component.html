@@ -2,8 +2,8 @@
     <header class="header">
         <h1 class="header__title">My phone book!</h1>
         <form class="form">
-            <input class="form-input" type="text" name="input" placeholder="search text goes here" #inputAdd [(ngModel)]="inputValue">
-            <button class="form-btn" id="add" (click)="addPhone(inputAdd)">add phone</button>
+            <input class="form-input" type="text" name="input" placeholder="search text goes here" #inputAdd [(ngModel)]="addInput">
+            <button class="form-btn" id="add" (click)="addPhone()">add phone</button>
         </form>
     </header>
     <main class="main">
@@ -28,4 +28,24 @@
             </tbody>
         </table>
     </main>
+    <ng-container *ngIf="isModal">
+        <div class="modal-window">
+            <form class="add-form" name="addform" #addForm="ngForm">
+                <div class="form-head">
+                    <h3 class="form-head__title">Add phone</h3>
+                    <span class="form-head__close cursor" (click)="closeModal()">&#10006;</span>
+                </div>
+                <hr class="add-form__line">
+                <div class="input-group">
+                    <input type="text" [placeholder]="firstPlaceholder" name="first" [(ngModel)]="firstNameInput">
+                    <input type="text" [placeholder]="lastPlaceholder" name="last" [(ngModel)]="secondNameInput">
+                    <input type="text" [placeholder]="numberPlaceholder" name="number" [(ngModel)]="numberPhoneInput">
+                </div>
+                <hr class="add-form__line">
+                <div class="form-footer">
+                    <button class="form-footer__btn" (click)="savePhone()">Save</button>
+                </div>
+            </form>
+        </div>
+    </ng-container>
 </div>
