@@ -55,6 +55,10 @@
             padding: 16px 10px;
             font-size: 18px;
         }
+
+        &__th:nth-child(1), &__th:nth-child(2), &__th:nth-child(3) {
+            width: 25%;
+        }
     }
 
     &-body {
@@ -127,6 +131,7 @@
 }
 
 .input-group {
+    position: relative;
     padding: 20px 30px;
 
     input {
@@ -148,4 +153,11 @@
         border-color: #007dff;
         box-shadow: 0 0 4px 1px #007dff;
     }
+}
+
+.error-message {
+    position: absolute;
+    left: 30px;
+    bottom: 10px;
+    color: rgb(213 61 61);
 }

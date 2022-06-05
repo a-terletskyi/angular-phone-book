@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-
 @Component({
   selector: 'app-phone-book',
   templateUrl: './phone-book.component.html',
@@ -9,12 +7,12 @@ import { NgForm } from '@angular/forms';
 
 export class PhoneBookComponent implements OnInit {
   addInput = '';
-  firstPlaceholder = 'first name goes here';
-  lastPlaceholder = 'second name goes here';
-  numberPlaceholder = 'number phone goes here';
-  firstNameInput!: string; secondNameInput = ''; numberPhoneInput!: string;
-  isModal!: boolean; phoneIndex!: number;
-  isValid = false; isEdit = false;
+  errorMessage = '';
+  firstNameInput!: string; secondNameInput!: string; numberPhoneInput!: string;
+  tSort!: string; cSort!: string;
+  isModal!: boolean; isValid!: boolean;
+  phoneIndex!: number;
+  isEdit = false;
 
   contactsPhone: IPhone[] = [
     { firstName: 'Petya', lastName: 'Zhuk', phoneNumber: '0631111111' },
@@ -32,6 +30,7 @@ export class PhoneBookComponent implements OnInit {
     this.firstNameInput = '';
     this.secondNameInput = '';
     this.numberPhoneInput = '';
+    this.errorMessage = '';
     this.isEdit = false;
     this.isModal = true;
   }
@@ -42,13 +41,14 @@ export class PhoneBookComponent implements OnInit {
     this.firstNameInput = this.contactsPhone[index].firstName;
     this.secondNameInput = this.contactsPhone[index].lastName;
     this.numberPhoneInput = this.contactsPhone[index].phoneNumber;
+    this.errorMessage = '';
     this.phoneIndex = index;
     this.isEdit = true;
     this.isModal = true;
   }
 
   savePhone(): void {
-    this.validity();
+    this.checkValidity();
     if (this.isValid) {
       const phoneNum = { firstName: this.firstNameInput, lastName: this.secondNameInput, phoneNumber: this.numberPhoneInput };
       this.isEdit ? this.contactsPhone.splice(this.phoneIndex, 1, phoneNum) : this.contactsPhone.push(phoneNum);
@@ -56,30 +56,25 @@ export class PhoneBookComponent implements OnInit {
     }
   }
 
-  closeModal(): void { this.isModal = false }
-
-  validity(): void {
-    const firstNameRegExp: boolean = /^[a-zA-z]{2,16}$/.test(this.firstNameInput);
-    const lastNameRegExp: boolean = /^[a-zA-z]{2,16}$/.test(this.secondNameInput);
+  checkValidity(): void {
+    const firstNameRegExp: boolean = /^[a-zA-z\s]{2,16}$/.test(this.firstNameInput);
+    const lastNameRegExp: boolean = /^[a-zA-z\s]{2,20}$/.test(this.secondNameInput);
     const phoneNumberREgExp: boolean = /^((\+38)?\(?\d{3}\)?[\s\.-]?(\d{7}|\d{3}[\s\.-]\d{2}[\s\.-]\d{2}|\d{3}-\d{4}))$/.test(this.numberPhoneInput)
-    if (this.firstNameInput && this.secondNameInput && this.numberPhoneInput) { this.isValid = true } else { this.isValid = false }
+    this.isValid = false;
 
-    if (this.firstNameInput === '') { this.firstPlaceholder = 'Login cannot be blank' }
-    else if (!firstNameRegExp) { this.firstPlaceholder = 'Please provide a valid Login.' } else { this.firstPlaceholder = 'first name goes here' }
-
-    if (this.secondNameInput === '') { this.lastPlaceholder = 'Login cannot be blank' }
-    else if (!firstNameRegExp) { this.lastPlaceholder = 'Please provide a valid Login.' } else { this.lastPlaceholder = 'second name goes here' }
-
-    if (this.numberPhoneInput === '') { this.numberPlaceholder = 'Login cannot be blank' }
-    else if (!firstNameRegExp) { this.numberPlaceholder = 'Please provide a valid Login.' } else { this.numberPlaceholder = 'number phone goes here' }
+    if (firstNameRegExp && lastNameRegExp && phoneNumberREgExp) { this.isValid = true }
+    else if (this.firstNameInput === '' || this.secondNameInput === '' || this.numberPhoneInput === '') { this.errorMessage = 'Please fill in all fields' }
+    else if (!firstNameRegExp) { this.errorMessage = 'Please provide a valid First name.' }
+    else if (!lastNameRegExp) { this.errorMessage = 'Please provide a valid Second name.' }
+    else if (!phoneNumberREgExp) { this.errorMessage = 'Please provide a valid Phone number.' }
   }
 
+  closeModal(): void { this.isModal = false }
 
-  sort(): void { } // це має бути pipe
+  changeSort(chooseSort: string): void {
+    this.cSort = chooseSort;
+    this.tSort === 'asc' ? this.tSort = 'desc' : this.tSort = 'asc';
+  }
 }
 
-interface IPhone { firstName: string, lastName: string, phoneNumber: string }
-
-// Plan
-// Створити валідацію для данних
-// СТворити pipe для сортування,без параментів змінна toggle буде робити asc або desc та добавлятиметься клас з іконкою, можна через псевдоелемент
+export interface IPhone { firstName: string, lastName: string, phoneNumber: string }
